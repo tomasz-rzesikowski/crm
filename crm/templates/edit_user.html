@@ -1,0 +1,88 @@
+{% extends "_base.html" %}
+{% block content %}
+
+<article>
+    <section>
+        <h2>Dodaj pracownika</h2>
+        <form action="" method="post">
+            {{ form.hidden_tag() }}
+
+            <div class="container">
+                <div class="form-row">
+                    <div class="col-sm">
+                        {{ form.name.label }}<br>
+                        {{ form.name() }}<br>
+                        {% if form.name.errors %}
+                        <ul class="errors">
+                            {% for error in form.name.errors %}
+                            <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                    </div>
+
+                    <div class="col-sm">
+                        {{ form.surname.label }}<br>
+                        {{ form.surname() }}<br>
+                        {% if form.surname.errors %}
+                        <ul class="errors">
+                            {% for error in form.surname.errors %}
+                            <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-sm">
+                        {{ form.initials.label }}<br>
+                        {{ form.initials() }}<br>
+                        {% if form.initials.errors %}
+                        <ul class="errors">
+                            {% for error in form.initials.errors %}
+                            <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                    </div>
+
+                    <div class="col-sm">
+                        {{ form.phone.label }}<br>
+                        {{ form.phone() }}<br>
+                        {% if form.phone.errors %}
+                        <ul class="errors">
+                            {% for error in form.phone.errors %}
+                            <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-sm">
+                        {{ form.email.label }}<br>
+                        {{ form.email() }}<br>
+                        {% if form.email.errors %}
+                        <ul class="errors">
+                            {% for error in form.email.errors %}
+                            <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-sm">
+                        {{ form.button }}
+                    </div>
+                </div>
+            </div>
+        </form>
+
+    </section>
+</article>
+
+{% endblock %}
