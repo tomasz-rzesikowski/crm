@@ -1,0 +1,38 @@
+{% extends "_base.html" %}
+{% block content %}
+
+    <article>
+        Klienci<br>
+        <table>
+            <tr>
+                <td>Imię</td>
+                <td>Nazwisko</td>
+                <td>Firma</td>
+                <td>Adres</td>
+                <td>Miejscowość</td>
+                <td>Numer tel.</td>
+                <td>Email</td>
+            </tr>
+
+                {% for client in clients %}
+                    <tr>
+                    <td>{{ client.name }}</td>
+                    <td>{{ client.surname }}</td>
+                    <td>{{ client.company }}</td>
+                    <td>{{ client.address_street_and_number }}</td>
+                    <td>{{ client.address_zipcode_and_city }}</td>
+                    <td>{{ client.phone }}</td>
+                    <td>{{ client.email }}</td>
+                    <td><a class="btn" href="{{ url_for('clients.edit_client', idx=client.id) }}">Edytuj</a></td>
+                    <td><a class="btn" data-method="POST" href="{{ url_for('clients.delete_client', idx=client.id) }}"
+                           rel="nofollow">Usuń</a></td>
+                    <tr>
+                {% endfor %}
+            
+        </table>
+        <a class="btn" href="{{ url_for('clients.add_client') }}">Dodaj klienta</a>
+
+
+    </article>
+
+{% endblock %}
