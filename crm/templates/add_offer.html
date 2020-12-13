@@ -1,0 +1,56 @@
+{% extends "_base.html" %}
+{% import "macros.html" as macros %}
+{% block content %}
+
+    <h2>Dodaj oferte</h2>
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+
+        <div class="container">
+            <div class="form-row">
+                <div class="col-sm-4">
+                    {{ form.year.label }}<br>
+                    {{ form.year() }}<br>
+                    {% if form.year.errors %}
+                        <ul class="errors">
+                            {% for error in form.year.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+
+                <div class="col-sm-4">
+                    {{ macros.form_field(form.year) }}
+                </div>
+
+
+                <div class="col-sm-4">
+                    {{ form.offer_number.label }}<br>
+                    {{ form.offer_number() }}<br>
+                    {% if form.offer_number.errors %}
+                        <ul class="errors">
+                            {% for error in form.offer_number.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="col-sm-12">
+                    {{ form.button }}
+                    {% if form.button.errors %}
+                        <ul class="errors">
+                            {% for error in form.button.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </form>
+
+{% endblock %}
