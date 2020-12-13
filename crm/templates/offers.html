@@ -1,30 +1,6 @@
 {% extends "_base.html" %}
 {% import "macros.html" as macros %}
 
-{#{% block content %}#}
-{##}
-{#    <h2>Oferty</h2>
-{#        <table>#}
-{#            <tr>#}
-{#                <td>Rok</td>#}
-{#                <td>Numer oferty</td>#}
-{#            </tr>#}
-{##}
-{#                {% for offer in offers %}#}
-{#                    <tr>#}
-{#                    <td>{{ offer.year }}</td>#}
-{#                    <td>{{ offer.offer_number }}</td>#}
-{#                    <tr>#}
-{#                {% endfor %}#}
-{#            #}
-{#        </table>#}
-{#        <a class="btn" href="{{ url_for('offers.add_offer') }}">Dodaj oferte</a>#}
-{##}
-{##}
-{#    #}
-{##}
-{#{% endblock %}#}
-
 {% block content %}
 
 
@@ -32,39 +8,28 @@
 
     <table>
         {% for offer in offers %}
-            {# nie da sie uzyc break anbo continue ale mozna uzywac if w skladni petli
- "for example in examples if example ...."#}
 
             {% if loop.first %}
                 <tr>
                     <td>Rok</td>
                     <td>Numer oferty</td>
                 </tr>
-
-{#                {% elif %}#}
-{#                {% else %}#}
-
             {% endif %}
-
 
             <tr>
                 <td>{{ offer.year }}</td>
-                <td>{{ offer.offer_number }}</td>
+                <td>{{ offer.offer_number }}{{ offer.offer_version }}</td>
+                <td><a class="btn" href="{{ url_for('offers.edit', idx=offer.id) }}">Edytuj</a></td>
+                <td><a class="btn" data-method="POST" href="{{ url_for('offers.delete', idx=offer.id) }}"
+                       rel="nofollow">Usuń</a></td>
             <tr>
-
-
-
-                        <tr>
-                            {{ macros.table_column(offer.year) }}
-                            {{ macros.table_column(offer.offer_number) }}
-                        <tr>
 
         {% else %}
             <li>Brak ofert</li>
         {% endfor %}
 
     </table>
-    <a class="btn" href="{{ url_for('offers.add_offer') }}">Dodaj oferte</a>
+    <a class="btn" href="{{ url_for('offers.add') }}">Dodaj oferte</a>
 
 
 {% endblock %}

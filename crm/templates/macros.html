@@ -11,7 +11,11 @@
 {%- endmacro %}
 
 {%- macro form_field(form_field) -%}
-    {{ form_field.label }}<br>
+
+    {% if form_field.type != "SubmitField" %}
+        {{ form_field.label }}<br>
+    {% endif %}
+
     {{ form_field() }}<br>
     {% if form_field.errors %}
         <ul class="errors">
