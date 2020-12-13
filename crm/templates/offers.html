@@ -1,0 +1,35 @@
+{% extends "_base.html" %}
+{% import "macros.html" as macros %}
+
+{% block content %}
+
+
+    <h2>Oferty</h2>
+
+    <table>
+        {% for offer in offers %}
+
+            {% if loop.first %}
+                <tr>
+                    <td>Rok</td>
+                    <td>Numer oferty</td>
+                </tr>
+            {% endif %}
+
+            <tr>
+                <td>{{ offer.year }}</td>
+                <td>{{ offer.offer_number }}{{ offer.offer_version }}</td>
+                <td><a class="btn" href="{{ url_for('offers.edit', idx=offer.id) }}">Edytuj</a></td>
+                <td><a class="btn" data-method="POST" href="{{ url_for('offers.delete', idx=offer.id) }}"
+                       rel="nofollow">Usuń</a></td>
+            <tr>
+
+        {% else %}
+            <li>Brak ofert</li>
+        {% endfor %}
+
+    </table>
+    <a class="btn" href="{{ url_for('offers.add') }}">Dodaj oferte</a>
+
+
+{% endblock %}
