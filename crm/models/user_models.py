@@ -16,3 +16,11 @@ class User(db.Model):
     @staticmethod
     def get_by_id(idx):
         return User.query.get(idx)
+
+    @staticmethod
+    def get_by_email(email):
+        return User.query.filter_by(email=email).first()
+
+    @staticmethod
+    def get_by_initials(initials):
+        return User.query.filter_by(initials=initials).first()

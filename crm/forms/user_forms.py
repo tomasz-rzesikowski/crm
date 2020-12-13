@@ -15,11 +15,10 @@ def proper_regexp(regexp='', message=''):
 
 
 class UserForm(FlaskForm):
-    def __init__(self, button_label, old_initials='', old_email='', **kwargs):
+    def __init__(self, button_label, base_idx=None, **kwargs):
         super(UserForm, self).__init__(**kwargs)
         self.button.label.text = button_label
-        self.old_initials = old_initials
-        self.old_email = old_email
+        self.base_idx = base_idx
 
     name = StringField(
         'Imię',
@@ -37,7 +36,7 @@ class UserForm(FlaskForm):
         validators=[
             DataRequired(),
             proper_regexp(
-                regexp=r'(\p{Lu}\p{Ll}+){1,2}',
+                regexp=r'(\p{Lu}\p{Ll}+)([- ]?)(\p{Lu}\p{Ll}+)?',
                 message='Dozwolone tylko nazwiska zaczynające się dużą literą i skłądające się z samych liter'
             )
         ]
@@ -55,11 +54,12 @@ class UserForm(FlaskForm):
     )
 
     def validate_initials(self, initials_field):
-        if self.old_initials is False and User.query.filter_by(initials=initials_field.data).first():
+        if self.base_idx and User.get_by_initials(initials_field.data).id != self.base_idx:
             raise ValidationError('Istnieje użytkownik z takimi inicjałami')
 
-        if initials_field.data != self.old_initials and User.query.filter_by(initials=initials_field.data).first():
+        if self.base_idx is None and User.get_by_initials(initials_field.data):
             raise ValidationError('Istnieje użytkownik z takimi inicjałami')
+
 
     phone = StringField(
         'Numer tel.',
@@ -83,10 +83,10 @@ class UserForm(FlaskForm):
     )
 
     def validate_email(self, email_field):
-        if self.old_email is False and User.query.filter_by(email=email_field.data).first():
+        if self.base_idx and User.get_by_email(email_field.data).id != self.base_idx:
             raise ValidationError('Istnieje użytkownik z takim emailem')
 
-        if email_field.data != self.old_email and User.query.filter_by(email=email_field.data).first():
+        if self.base_idx is None and User.get_by_email(email_field.data):
             raise ValidationError('Istnieje użytkownik z takim emailem')
 
     button = SubmitField()

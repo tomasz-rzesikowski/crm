@@ -1,8 +1,7 @@
 {% extends "_base.html" %}
 {% block content %}
 
-<article>
-    Użytkownicy<br>
+    <h2>Użytkownicy</h2>
 
     <tr>
         <td>Imię</td>
@@ -13,19 +12,17 @@
         <br>
 
         {% for user in users %}
-        <td>{{ user.name }}</td>
-        <td>{{ user.surname }}</td>
-        <td>{{ user.initials }}</td>
-        <td>{{ user.phone }}</td>
-        <td>{{ user.email }}</td>
-        <td><a class="btn" href="{{ url_for('users.edit_user', idx=user.id) }}" rel="nofollow">Edytuj</a></td>
-        <td><a class="btn" data-method="POST" href="{{ url_for('users.delete_user', idx=user.id) }}" rel="nofollow">Usuń</a></td>
-        <br>
+            <td>{{ user.name }}</td>
+            <td>{{ user.surname }}</td>
+            <td>{{ user.initials }}</td>
+            <td>{{ user.phone }}</td>
+            <td>{{ user.email }}</td>
+            <td><a class="btn" href="{{ url_for('users.edit', idx=user.id) }}" rel="nofollow">Edytuj</a></td>
+            <td><a class="btn" data-method="POST" href="{{ url_for('users.delete', idx=user.id) }}" rel="nofollow">Usuń</a>
+            </td>
+            <br>
         {% endfor %}
     </tr>
-    <a class="btn" href="{{ url_for('users.add_user') }}">Dodaj użytkownika</a>
-
-
-</article>
+    <a class="btn" href="{{ url_for('users.add') }}">Dodaj użytkownika</a>
 
 {% endblock %}

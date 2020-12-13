@@ -1,5 +1,3 @@
-import os
-
 from flask import Blueprint, render_template, url_for
 from werkzeug.utils import redirect
 
@@ -7,18 +5,17 @@ from crm import db
 from ..forms import UserForm
 from ..models import User
 
-basedir = os.path.abspath(os.path.dirname(__file__))
 bp_user = Blueprint('users', __name__, url_prefix='/users', template_folder='templates')
 
 
-@bp_user.route('', methods=['GET'])
-def show_all_users():
+@bp_user.route('/', methods=['GET'])
+def users():
     users = User.get_all()
     return render_template('users.html', users=users)
 
 
 @bp_user.route('/add', methods=['GET', 'POST'])
-def add_user():
+def add():
     form = UserForm(button_label="Dodaj")
     if form.validate_on_submit():
         form = UserForm(button_label="Dodaj")
@@ -32,18 +29,18 @@ def add_user():
         db.session.add(user)
         db.session.commit()
 
-        return redirect(url_for('users.show_all_users'))
+        return redirect(url_for('users.users'))
 
     return render_template('add_user.html', form=form)
 
 
 @bp_user.route("/edit/<int:idx>", methods=['GET', 'POST'])
-def edit_user(idx):
+def edit(idx):
     user = User.get_by_id(idx)
-    form = UserForm(button_label="Zapisz", old_initials=user.initials, old_email=user.email)
+    form = UserForm(button_label="Zapisz", base_idx=idx)
 
     if form.validate_on_submit():
-        form = UserForm(button_label="Zapisz", old_initials=user.initials, old_email=user.email)
+        form = UserForm(button_label="Zapisz",  base_idx=idx)
         user = User.get_by_id(idx)
         user.name = form.name.data
         user.surname = form.surname.data
@@ -53,7 +50,7 @@ def edit_user(idx):
 
         db.session.commit()
 
-        return redirect(url_for('users.show_all_users'))
+        return redirect(url_for('users.users'))
 
     if form.name.data is None:
         form.name.data = user.name
@@ -66,8 +63,8 @@ def edit_user(idx):
 
 
 @bp_user.route("/delete/<int:idx>", methods=['GET'])
-def delete_user(idx):
-    dryer = User.get_by_id(idx)
-    db.session.delete(dryer)
+def delete(idx):
+    user = User.get_by_id(idx)
+    db.session.delete(user)
     db.session.commit()
-    return redirect(url_for('users.show_all_users'))
+    return redirect(url_for('users.users'))
