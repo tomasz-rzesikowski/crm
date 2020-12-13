@@ -75,18 +75,16 @@ class ClientForm(FlaskForm):
     button = SubmitField()
 
     def validate_unique_constrain(self, base_idx=None):
+        client = Client.get_by_unique_constrain(name=self.name.data,
+                                                surname=self.surname.data,
+                                                phone=self.phone.data,
+                                                email=self.email.data)
         if base_idx:
-            if Client.get_by_unique_constrain(name=self.name.data,
-                                              surname=self.surname.data,
-                                              phone=self.phone.data,
-                                              email=self.email.data).id != base_idx:
+            if client.id != base_idx:
                 raise ValidationError(f'Istnieje klient {self.name.data} {self.surname.data}'
                                       f' z numerem tel {self.phone.data} i emailem {self.email.data}')
 
-        if Client.get_by_unique_constrain(name=self.name.data,
-                                          surname=self.surname.data,
-                                          phone=self.phone.data,
-                                          email=self.email.data):
+        if client:
             raise ValidationError(f'Istnieje klient {self.name.data} {self.surname.data}'
                                   f' z numerem tel {self.phone.data} i emailem {self.email.data}')
 

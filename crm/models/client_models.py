@@ -16,7 +16,7 @@ class Client(db.Model):
                       CheckConstraint("surname <> '' OR phone  <> '' OR  email <> ''"))
 
     def __repr__(self):
-        return '<Client %r>' % self.name
+        return f'<Client {self.name} {self.surname}>'
 
     @staticmethod
     def get_all():

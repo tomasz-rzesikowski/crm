@@ -11,14 +11,14 @@ from ..models import Client
 bp_client = Blueprint('clients', __name__, url_prefix='/clients')
 
 
-@bp_client.route('', methods=['GET'])
-def show_all_clients():
+@bp_client.route('/', methods=['GET'])
+def clients():
     clients = Client.get_all()
     return render_template('clients.html', clients=clients)
 
 
 @bp_client.route('/add', methods=['GET', 'POST'])
-def add_client():
+def add():
     form = ClientForm(button_label="Dodaj")
     if form.validate_on_submit():
         try:
@@ -48,13 +48,13 @@ def add_client():
             db.session.add(client)
             db.session.commit()
 
-        return redirect(url_for('clients.show_all_clients'))
+        return redirect(url_for('clients.clients'))
 
     return render_template('add_client.html', form=form)
 
 
 @bp_client.route("/edit/<int:idx>", methods=['GET', 'POST'])
-def edit_client(idx):
+def edit(idx):
     client = Client.get_by_id(idx)
     form = ClientForm(button_label="Zapisz")
 
@@ -82,7 +82,7 @@ def edit_client(idx):
 
             db.session.commit()
 
-            return redirect(url_for('clients.show_all_clients'))
+            return redirect(url_for('clients.clients'))
 
     if form.name.data is None and form.surname.data is None \
             and form.phone.data is None and form.email.data is None:
@@ -98,8 +98,8 @@ def edit_client(idx):
 
 
 @bp_client.route("/delete/<int:idx>", methods=['GET'])
-def delete_client(idx):
+def delete(idx):
     client = Client.get_by_id(idx)
     db.session.delete(client)
     db.session.commit()
-    return redirect(url_for('clients.show_all_clients'))
+    return redirect(url_for('clients.clients'))

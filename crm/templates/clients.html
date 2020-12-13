@@ -23,14 +23,14 @@
                     <td>{{ client.address_zipcode_and_city }}</td>
                     <td>{{ client.phone }}</td>
                     <td>{{ client.email }}</td>
-                    <td><a class="btn" href="{{ url_for('clients.edit_client', idx=client.id) }}">Edytuj</a></td>
-                    <td><a class="btn" data-method="POST" href="{{ url_for('clients.delete_client', idx=client.id) }}"
+                    <td><a class="btn" href="{{ url_for('clients.edit', idx=client.id) }}">Edytuj</a></td>
+                    <td><a class="btn" data-method="POST" href="{{ url_for('clients.delete', idx=client.id) }}"
                            rel="nofollow">Usuń</a></td>
                     <tr>
                 {% endfor %}
             
         </table>
-        <a class="btn" href="{{ url_for('clients.add_client') }}">Dodaj klienta</a>
+        <a class="btn" href="{{ url_for('clients.add') }}">Dodaj klienta</a>
 
 
     </article>
