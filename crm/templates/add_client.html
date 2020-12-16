@@ -102,16 +102,17 @@
 
         <div class="form-row">
             <div class="col-sm-12">
-                {{ form.button }}
-                {% if form.button.errors %}
+                {{ form.submit }}
+                {% if form.submit.errors %}
                     <ul class="errors">
-                        {% for error in form.button.errors %}
+                        {% for error in form.submit.errors %}
                             <li>{{ error }}</li>
                         {% endfor %}
                     </ul>
                 {% endif %}
             </div>
         </div>
+
     </form>
 
 {% endblock %}

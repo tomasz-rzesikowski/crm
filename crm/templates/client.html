@@ -1,0 +1,46 @@
+{% extends "_base.html" %}
+{% import "macros.html" as macros %}
+{% block content %}
+    <h2>Szczegóły</h2>
+    <table>
+        <tr>
+            <td>Imię</td>
+            <td>{{ client.name }}</td>
+        </tr>
+        <tr>
+            <td>Nazwisko</td>
+            <td>{{ client.surname }}</td>
+        </tr>
+        <tr>
+            <td>Firma</td>
+            <td>{{ client.company }}</td>
+        </tr>
+        <tr>
+            <td>Adres</td>
+            <td>{{ client.address_street_and_number }}</td>
+        </tr>
+        <tr>
+            <td>Miejscowość</td>
+            <td>{{ client.address_zipcode_and_city }}</td>
+        </tr>
+        <tr>
+            <td>Numer tel.</td>
+            <td>{{ client.phone }}</td>
+        </tr>
+        <tr>
+            <td>Email</td>
+            <td>{{ client.email }}</td>
+        </tr>
+
+
+    </table>
+
+    <td><a class="btn" href="{{ url_for('offers.add', client_id=client.id) }}">Dodaj ofertę</a></td>
+    <td><a class="btn" href="{{ url_for('clients.edit', idx=client.id) }}">Edytuj</a></td>
+    <td><a class="btn" data-method="POST" href="{{ url_for('clients.delete', idx=client.id) }}"
+           rel="nofollow">Usuń</a></td>
+    <tr>
+
+
+
+{% endblock %}

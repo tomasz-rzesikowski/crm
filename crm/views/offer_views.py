@@ -1,8 +1,8 @@
-from flask import Blueprint, render_template, redirect, url_for
-from wtforms import ValidationError
+from flask import Blueprint, render_template, redirect, url_for, request
 
 from crm import db
-from ..forms import OfferForm
+from ..forms import NewOfferForm, EditOfferForm
+from ..models import User, Client
 from ..models import Offer
 
 bp_offer = Blueprint('offers', __name__, url_prefix='/offers')
@@ -10,29 +10,27 @@ bp_offer = Blueprint('offers', __name__, url_prefix='/offers')
 
 @bp_offer.route('', methods=['GET'])
 def offers():
-    offers = Offer.get_all()
+    offers = Offer.get_all_with_users_initials()
     return render_template('offers.html', offers=offers)
 
 
 @bp_offer.route('/add', methods=['GET', 'POST'])
 def add():
-    form = OfferForm(button_label="Dodaj")
+    form = NewOfferForm()
+
+    users = User.get_all_initials()
+    form.user.choices = users
+
     if form.validate_on_submit():
-        try:
-            form.validate_unique_constrain()
-        except ValidationError as error:
-            form.button.errors = [error]
-            return render_template('add_offer.html', form=form)
-
-        form = OfferForm(button_label="Dodaj")
-        year = form.year.data
-        offer_number = form.offer_number.data
-        offer_version = form.offer_version.data
-
-        offer = Offer(year=year, offer_number=offer_number, offer_version=offer_version)
+        offer = Offer(year=form.year.data,
+                      offer_number=form.offer_number.data,
+                      offer_version=form.offer_version.data,
+                      client_id=request.args.get('client_id'),
+                      user_id=form.user.data)
 
         db.session.add(offer)
         db.session.commit()
+
         return redirect(url_for('offers.offers'))
 
     return render_template('add_offer.html', form=form)
@@ -41,29 +39,36 @@ def add():
 @bp_offer.route("/edit/<int:idx>", methods=['GET', 'POST'])
 def edit(idx):
     offer = Offer.get_by_id(idx)
-    form = OfferForm(button_label="Zapisz", base_idx=idx)
+    form = EditOfferForm()
+
+    form.id.data = offer.id
+    form.year.data = offer.year
+    form.offer_number.data = offer.offer_number
+    form.offer_version.data = offer.offer_version
+
+    clients = []
+    for client in Client.get_all_names_and_surnames():
+        clients.append((client[0], client[1] + ' ' + client[2]))
+
+    form.client.choices = clients
+    if request.method == 'GET':
+        form.client.data = offer.user_id
+
+    users = User.get_all_initials()
+    form.user.choices = users
+    if request.method == 'GET':
+        form.user.data = offer.user_id
+
     if form.validate_on_submit():
-        try:
-            form.validate_unique_constrain()
-        except ValidationError as error:
-            form.button.errors = [error]
-            return render_template('edit_offer.html', form=form)
-
-        form = OfferForm(button_label="Zapisz", base_idx=idx)
-
-        offer = Offer.get_by_id(idx)
         offer.year = form.year.data
         offer.offer_number = form.offer_number.data
         offer.offer_version = form.offer_version.data
+        offer.client_id = form.client.data
+        offer.user_id = form.user.data
 
         db.session.commit()
 
         return redirect(url_for('offers.offers'))
-
-    if form.year.data is None:
-        form.year.data = offer.year
-        form.offer_number.data = offer.offer_number
-        form.offer_version.data = offer.offer_version
 
     return render_template('edit_offer.html', form=form)
 
@@ -73,4 +78,5 @@ def delete(idx):
     offer = Offer.get_by_id(idx)
     db.session.delete(offer)
     db.session.commit()
+
     return redirect(url_for('offers.offers'))

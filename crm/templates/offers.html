@@ -13,12 +13,16 @@
                 <tr>
                     <td>Rok</td>
                     <td>Numer oferty</td>
+                    <td>Klient</td>
+                    <td>Kierownik</td>
                 </tr>
             {% endif %}
 
             <tr>
                 <td>{{ offer.year }}</td>
                 <td>{{ offer.offer_number }}{{ offer.offer_version }}</td>
+                <td>{{ offer.name }} {{ offer.surname }}</td>
+                <td>{{ offer.initials }}</td>
                 <td><a class="btn" href="{{ url_for('offers.edit', idx=offer.id) }}">Edytuj</a></td>
                 <td><a class="btn" data-method="POST" href="{{ url_for('offers.delete', idx=offer.id) }}"
                        rel="nofollow">Usuń</a></td>
@@ -29,7 +33,7 @@
         {% endfor %}
 
     </table>
-    <a class="btn" href="{{ url_for('offers.add') }}">Dodaj oferte</a>
+    <a class="btn" href="{{ url_for('offers.add') }}">Dodaj ofertę</a>
 
 
 {% endblock %}

@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from regex import regex
-from wtforms import StringField, SubmitField
+from wtforms import StringField, SubmitField, IntegerField
 from wtforms.validators import Email, DataRequired, ValidationError
 
 from ..models import User
@@ -15,11 +15,6 @@ def proper_regexp(regexp='', message=''):
 
 
 class UserForm(FlaskForm):
-    def __init__(self, button_label, base_idx=None, **kwargs):
-        super(UserForm, self).__init__(**kwargs)
-        self.button.label.text = button_label
-        self.base_idx = base_idx
-
     name = StringField(
         'Imię',
         validators=[
@@ -53,14 +48,6 @@ class UserForm(FlaskForm):
         ]
     )
 
-    def validate_initials(self, initials_field):
-        if self.base_idx and User.get_by_initials(initials_field.data).id != self.base_idx:
-            raise ValidationError('Istnieje użytkownik z takimi inicjałami')
-
-        if self.base_idx is None and User.get_by_initials(initials_field.data):
-            raise ValidationError('Istnieje użytkownik z takimi inicjałami')
-
-
     phone = StringField(
         'Numer tel.',
         validators=[
@@ -82,16 +69,48 @@ class UserForm(FlaskForm):
         ]
     )
 
-    def validate_email(self, email_field):
-        if self.base_idx and User.get_by_email(email_field.data).id != self.base_idx:
-            raise ValidationError('Istnieje użytkownik z takim emailem')
+    submit = SubmitField()
 
-        if self.base_idx is None and User.get_by_email(email_field.data):
-            raise ValidationError('Istnieje użytkownik z takim emailem')
+    def validate_on_submit(self):
+        rv = FlaskForm.validate_on_submit(self)
+        if not rv:
+            return False
 
-    button = SubmitField()
+        user = User.get_by_initials(self.initials.data)
+        if user is not None:
+            if not hasattr(self, 'id'):
+                self.initials.errors.append(
+                    f'Istnieje użytkownik z inicjałami {self.initials.data}.')
+                return False
 
-    @staticmethod
-    def validate_model(user):
-        if User.query.get(user.initials).first():
-            raise ValidationError('Istnieje użytkownik z takimi inicjałami')
+            if hasattr(self, 'id') and user.id != self.id.data:
+                self.initials.errors.append(
+                    f'Istnieje użytkownik z inicjałami {self.initials.data}.')
+                return False
+
+        user = User.get_by_email(self.email.data)
+        if user is not None:
+            if not hasattr(self, 'id'):
+                self.email.errors.append(
+                    f'Istnieje użytkownik z emailem {self.email.data}.')
+                return False
+
+            if hasattr(self, 'id') and user.id != self.id.data:
+                self.email.errors.append(
+                    f'Istnieje użytkownik z emailem {self.email.data}.')
+                return False
+
+        return True
+
+
+class NewUserForm(UserForm):
+    submit = SubmitField('Utwórz pracownika')
+
+
+class EditUserForm(UserForm):
+    id = IntegerField()
+    submit = SubmitField('Zapisz')
+
+
+class DeleteUserForm(FlaskForm):
+    submit = SubmitField('Usuń')

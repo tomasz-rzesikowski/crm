@@ -24,3 +24,7 @@ class User(db.Model):
     @staticmethod
     def get_by_initials(initials):
         return User.query.filter_by(initials=initials).first()
+
+    @staticmethod
+    def get_all_initials():
+        return User.query.with_entities(User.id, User.initials).all()

@@ -29,3 +29,7 @@ class Client(db.Model):
     @staticmethod
     def get_by_unique_constrain(name, surname, phone, email):
         return Client.query.filter_by(name=name, surname=surname, phone=phone, email=email).first()
+
+    @staticmethod
+    def get_all_names_and_surnames():
+        return Client.query.with_entities(Client.id, Client.name, Client.surname).all()
