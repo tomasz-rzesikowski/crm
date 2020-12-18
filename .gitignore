@@ -3,4 +3,4 @@
 *.db
 migrations
 crm/static/css
-crm/static/img
+crm/static/img/private

@@ -1,0 +1,2 @@
+MAIN_FOLDER_PATH=test2
+DB_PATH=test

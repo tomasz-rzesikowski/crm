@@ -20,6 +20,7 @@ def create_app():
     crm_app.register_blueprint(views.bp_user)
     crm_app.register_blueprint(views.bp_client)
     crm_app.register_blueprint(views.bp_offer)
+    crm_app.register_blueprint(views.bp_settings)
 
     db.init_app(crm_app)
     Migrate(crm_app, db)
