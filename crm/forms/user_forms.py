@@ -77,6 +77,7 @@ class UserForm(FlaskForm):
             return False
 
         user = User.get_by_initials(self.initials.data)
+
         if user is not None:
             if not hasattr(self, 'id'):
                 self.initials.errors.append(
@@ -104,7 +105,7 @@ class UserForm(FlaskForm):
 
 
 class NewUserForm(UserForm):
-    submit = SubmitField('Utwórz pracownika')
+    submit = SubmitField('Stwórz użytkownika')
 
 
 class EditUserForm(UserForm):

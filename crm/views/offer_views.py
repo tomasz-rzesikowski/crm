@@ -41,10 +41,11 @@ def edit(idx):
     offer = Offer.get_by_id(idx)
     form = EditOfferForm()
 
-    form.id.data = offer.id
-    form.year.data = offer.year
-    form.offer_number.data = offer.offer_number
-    form.offer_version.data = offer.offer_version
+    if request.method == 'GET':
+        form.id.data = offer.id
+        form.year.data = offer.year
+        form.offer_number.data = offer.offer_number
+        form.offer_version.data = offer.offer_version
 
     clients = []
     for client in Client.get_all_names_and_surnames():

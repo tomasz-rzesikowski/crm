@@ -1,119 +1,59 @@
 {% extends "_base.html" %}
+{% import "macros.html" as macros %}
 {% block content %}
-
-
-    <h2>Edytuj klienta</h2>
-    <form action="" method="post">
-        {{ form.hidden_tag() }}
-
+    <section class="page-header page-header-classic page-header-sm" style="margin-top: -10px; position: relative">
         <div class="container">
-            <div class="form-row">
-                <div class="col-sm-4">
-                    {{ form.name.label }}<br>
-                    {{ form.name() }}<br>
-                    {% if form.name.errors %}
-                        <ul class="errors">
-                            {% for error in form.name.errors %}
-                                <li>{{ error }}</li>
-                            {% endfor %}
-                        </ul>
-                    {% endif %}
+            <div class="row">
+                <div class="col-md-8 order-2 order-md-1 align-self-center p-static">
+                    <h1>EDYTUJ KLIENTA</h1>
                 </div>
-
-                <div class="col-sm-4">
-                    {{ form.surname.label }}<br>
-                    {{ form.surname() }}<br>
-                    {% if form.surname.errors %}
-                        <ul class="errors">
-                            {% for error in form.surname.errors %}
-                                <li>{{ error }}</li>
-                            {% endfor %}
-                        </ul>
-                    {% endif %}
-                </div>
-
-
-                <div class="col-sm-4">
-                    {{ form.company.label }}<br>
-                    {{ form.company() }}<br>
-                    {% if form.company.errors %}
-                        <ul class="errors">
-                            {% for error in form.company.errors %}
-                                <li>{{ error }}</li>
-                            {% endfor %}
-                        </ul>
-                    {% endif %}
-                </div>
-            </div>
-
-            <div class="form-row">
-                <div class="col-sm-6">
-                    {{ form.address_street_and_number.label }}<br>
-                    {{ form.address_street_and_number() }}<br>
-                    {% if form.address_street_and_number.errors %}
-                        <ul class="errors">
-                            {% for error in form.address_street_and_number.errors %}
-                                <li>{{ error }}</li>
-                            {% endfor %}
-                        </ul>
-                    {% endif %}
-                </div>
-
-
-                <div class="col-sm-6">
-                    {{ form.address_zipcode_and_city.label }}<br>
-                    {{ form.address_zipcode_and_city() }}<br>
-                    {% if form.address_zipcode_and_city.errors %}
-                        <ul class="errors">
-                            {% for error in form.address_zipcode_and_city.errors %}
-                                <li>{{ error }}</li>
-                            {% endfor %}
-                        </ul>
-                    {% endif %}
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="col-sm-6">
-                    {{ form.phone.label }}<br>
-                    {{ form.phone() }}<br>
-                    {% if form.phone.errors %}
-                        <ul class="errors">
-                            {% for error in form.phone.errors %}
-                                <li>{{ error }}</li>
-                            {% endfor %}
-                        </ul>
-                    {% endif %}
-                </div>
-
-
-                <div class="col-sm-6">
-                    {{ form.email.label }}<br>
-                    {{ form.email() }}<br>
-                    {% if form.email.errors %}
-                        <ul class="errors">
-                            {% for error in form.email.errors %}
-                                <li>{{ error }}</li>
-                            {% endfor %}
-                        </ul>
-                    {% endif %}
-                </div>
-            </div>
-        </div>
-
-        <div class="form-row">
-            <div class="col-sm-12">
-                {{ form.submit }}<br>
-                {% if form.submit.errors %}
-                    <ul class="errors">
-                        {% for error in form.submit.errors %}
-                            <li>{{ error }}</li>
-                        {% endfor %}
+                <div class="col-md-4 order-1 order-md-2 align-self-center">
+                    <ul class="breadcrumb d-block text-md-right">
+                        <li class="active">EDYTUJ KLIENTA</li>
                     </ul>
-                {% endif %}
+                </div>
             </div>
         </div>
+    </section>
 
-
+    <form action="" method="post" novalidate class="container">
+        {{ form.hidden_tag() }}
+        <div hidden>
+            {{ form.id }}
+        </div>
+        <table class="table table-bordered stage-margin">
+            <tr>
+                <td>
+                    {{ macros.form_field(form.name) }}
+                </td>
+                <td colspan="2">
+                    {{ macros.form_field(form.surname) }}
+                </td>
+                <td>
+                    {{ macros.form_field(form.company) }}
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    {{ macros.form_field(form.address_street_and_number) }}
+                </td>
+                <td colspan="2">
+                    {{ macros.form_field(form.address_zipcode_and_city) }}
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    {{ macros.form_field(form.phone) }}
+                </td>
+                <td colspan="2">
+                    {{ macros.form_field(form.email) }}
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    {{ form.submit(class="btn btn-primary custom-btn-style-1 text-uppercase text-color-light custom-font-weight-medium") }}
+                </td>
+            </tr>
+        </table>
     </form>
-
 {% endblock %}

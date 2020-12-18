@@ -1,36 +1,45 @@
 {% extends "_base.html" %}
 {% import "macros.html" as macros %}
 {% block content %}
-
-    <h2>Dodaj oferte</h2>
-    <form action="" method="post" novalidate>
-        {{ form.hidden_tag() }}
-
+    <section class="page-header page-header-classic page-header-sm" style="margin-top: -10px; position: relative">
         <div class="container">
-            <div class="form-row">
-
-                <div class="col-sm-4">
-                    {{ macros.form_field(form.year) }}
+            <div class="row">
+                <div class="col-md-8 order-2 order-md-1 align-self-center p-static">
+                    <h1>DODAJ OFERTĘ</h1>
                 </div>
-
-                <div class="col-sm-4">
-                    {{ macros.form_field(form.offer_number) }}
-                </div>
-
-                <div class="col-sm-4">
-                    {{ macros.form_field(form.offer_version) }}
-                </div>
-
-                <div class="col-sm-4">
-                    {{ macros.form_field(form.user) }}
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="col-sm-12">
-                    {{ macros.form_field(form.submit) }}
+                <div class="col-md-4 order-1 order-md-2 align-self-center">
+                    <ul class="breadcrumb d-block text-md-right">
+                        <li class="active">DODAJ OFERTĘ</li>
+                    </ul>
                 </div>
             </div>
         </div>
-    </form>
+    </section>
+    <form action="" method="post" novalidate class="container">
+        {{ form.hidden_tag() }}
+        <table class="table table-bordered stage-margin">
+            <tr>
+                <td class="col-md-6">
+                    {{ macros.form_field(form.year) }}
+                </td>
+                <td class="col-md-6">
+                    {{ macros.form_field(form.offer_number) }}
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-6">
+                    {{ macros.form_field(form.offer_version) }}
+                </td>
+                <td class="col-md-6">
+                    {{ macros.form_field(form.user) }}
+                </td>
+            </tr>
+            <tr>
 
+                <td colspan="2">
+                    {{ form.submit(class="btn btn-primary custom-btn-style-1 text-uppercase text-color-light custom-font-weight-medium") }}
+                </td>
+            </tr>
+        </table>
+    </form>
 {% endblock %}

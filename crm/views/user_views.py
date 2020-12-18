@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, url_for
+from flask import Blueprint, render_template, url_for, request
 from werkzeug.utils import redirect
 
 from crm import db
@@ -38,12 +38,13 @@ def edit(idx):
     user = User.get_by_id(idx)
     form = EditUserForm()
 
-    form.id.data = user.id
-    form.name.data = user.name
-    form.surname.data = user.surname
-    form.initials.data = user.initials
-    form.phone.data = user.phone
-    form.email.data = user.email
+    if request.method == 'GET':
+        form.id.data = user.id
+        form.name.data = user.name
+        form.surname.data = user.surname
+        form.initials.data = user.initials
+        form.phone.data = user.phone
+        form.email.data = user.email
 
     if form.validate_on_submit():
         user.name = form.name.data

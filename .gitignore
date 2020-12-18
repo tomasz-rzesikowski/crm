@@ -2,3 +2,5 @@
 *.pyc
 *.db
 migrations
+crm/static/css
+crm/static/img
