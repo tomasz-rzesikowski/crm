@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from regex import regex
-from wtforms import StringField, SubmitField, IntegerField
+from wtforms import StringField, SubmitField, IntegerField, HiddenField
 from wtforms.validators import Email, DataRequired, ValidationError
 
 from ..models import User
@@ -109,7 +109,7 @@ class NewUserForm(UserForm):
 
 
 class EditUserForm(UserForm):
-    id = IntegerField()
+    id = HiddenField()
     submit = SubmitField('Zapisz')
 
 

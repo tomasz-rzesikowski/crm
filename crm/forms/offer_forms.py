@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from regex import regex
-from wtforms import IntegerField, SubmitField, StringField, SelectField
+from wtforms import IntegerField, SubmitField, StringField, SelectField, HiddenField
 from wtforms.validators import DataRequired, ValidationError
 
 from ..models import Offer
@@ -60,7 +60,7 @@ class NewOfferForm(OfferForm):
 
 
 class EditOfferForm(OfferForm):
-    id = IntegerField()
+    id = HiddenField()
     client = SelectField('Klient', coerce=int)
     user = SelectField('Kierownik', coerce=int)
     submit = SubmitField('Zapisz')

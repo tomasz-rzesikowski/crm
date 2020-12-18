@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 
-from wtforms import StringField, SubmitField
+from wtforms import StringField, SubmitField, RadioField
 from wtforms.validators import DataRequired
 
 
@@ -14,5 +14,7 @@ class SettingsForm(FlaskForm):
         'Ścieżka do głównego folderu',
         validators=[DataRequired()]
     )
+
+    create_folders = RadioField('Tworzyć i usuwać foldery na dysku?', choices=['Tak', 'Nie'])
 
     submit = SubmitField('Zapisz')

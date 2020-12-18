@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from regex import regex
-from wtforms import StringField, SubmitField, IntegerField
+from wtforms import StringField, SubmitField, IntegerField, HiddenField
 from wtforms.validators import Email, ValidationError
 
 from ..models import Client
@@ -105,7 +105,7 @@ class NewClientForm(ClientForm):
 
 
 class EditClientForm(ClientForm):
-    id = IntegerField()
+    id = HiddenField()
     submit = SubmitField('Zapisz')
 
 

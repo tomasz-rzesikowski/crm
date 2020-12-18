@@ -9,25 +9,27 @@ class FileHandler:
 
     @staticmethod
     def create_offer_file(offer):
-        basedir = Settings.get_instance().settings['MAIN_FOLDER_PATH']
+        if Settings.get_instance().settings['CREATE'] == 'Tak':
+            basedir = Settings.get_instance().settings['MAIN_FOLDER_PATH']
 
-        file = os.path.join(basedir, str(offer.year), str(offer.offer_number), str(offer.offer_version))
-        if os.path.isdir(file) is False:
-            try:
-                os.makedirs(file)
-            except OSError:
-                print("Creation of the directory %s failed" % file)
+            file = os.path.join(basedir, str(offer.year), str(offer.offer_number), str(offer.offer_version))
+            if os.path.isdir(file) is False:
+                try:
+                    os.makedirs(file)
+                except OSError:
+                    print("Creation of the directory %s failed" % file)
 
     @staticmethod
     def delete_offer_file(offer):
-        basedir = Settings.get_instance().settings['MAIN_FOLDER_PATH']
+        if Settings.get_instance().settings['CREATE'] == 'Tak':
+            basedir = Settings.get_instance().settings['MAIN_FOLDER_PATH']
 
-        file = os.path.join(basedir, str(offer.year), str(offer.offer_number), str(offer.offer_version))
-        if os.path.isdir(file) is False:
-            try:
-                shutil.rmtree(file, onerror=OSError)
-            except OSError:
-                print("Removing of the directory %s failed" % file)
+            file = os.path.join(basedir, str(offer.year), str(offer.offer_number), str(offer.offer_version))
+            if os.path.isdir(file) is False:
+                try:
+                    shutil.rmtree(file, onerror=OSError)
+                except OSError:
+                    print("Removing of the directory %s failed" % file)
 
     @staticmethod
     def get_instance():
