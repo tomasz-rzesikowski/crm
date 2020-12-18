@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, redirect, url_for, request
 
 from crm import db
+from ..file_handler import FileHandler
 from ..forms import NewOfferForm, EditOfferForm
 from ..models import User, Client
 from ..models import Offer
@@ -30,6 +31,8 @@ def add():
 
         db.session.add(offer)
         db.session.commit()
+
+        FileHandler.create_offer_file(offer)
 
         return redirect(url_for('offers.offers'))
 
@@ -79,5 +82,7 @@ def delete(idx):
     offer = Offer.get_by_id(idx)
     db.session.delete(offer)
     db.session.commit()
+
+    FileHandler.delete_offer_file(offer)
 
     return redirect(url_for('offers.offers'))
