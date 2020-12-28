@@ -4,6 +4,7 @@ from wtforms import IntegerField, SubmitField, StringField, SelectField, HiddenF
 from wtforms.validators import DataRequired, ValidationError
 
 from ..models import Offer
+from ..utils import FileHandler
 
 
 def proper_regexp(regexp='', message=''):
@@ -40,6 +41,12 @@ class OfferForm(FlaskForm):
         offer = Offer.get_by_unique_constrain(year=self.year.data,
                                               offer_number=self.offer_number.data,
                                               offer_version=self.offer_version.data)
+
+        if FileHandler.find_offer_file(self):
+            self.submit.errors.append(
+                f'Istnieje już folder dla oferty {self.year.data} {self.offer_number.data}{self.offer_version.data}.')
+            return False
+
         if offer is not None:
             if not hasattr(self, 'id'):
                 self.submit.errors.append(

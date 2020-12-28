@@ -31,6 +31,7 @@ class Settings:
         else:
             Settings.__instance = self
             self.settings = {'MAIN_FOLDER_PATH': '',
+                             'STANDARD_FOLDER_PATH': '',
                              'DB_PATH': '',
-                             'CREATE': 'Nie'}
+                             'CREATE': 'False'}
             self.read()

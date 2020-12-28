@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, redirect, url_for, request
 
 from crm import db
-from ..file_handler import FileHandler
+from ..utils import FileHandler
 from ..forms import NewOfferForm, EditOfferForm
 from ..models import User, Client
 from ..models import Offer
@@ -41,40 +41,44 @@ def add():
 
 @bp_offer.route("/edit/<int:idx>", methods=['GET', 'POST'])
 def edit(idx):
-    offer = Offer.get_by_id(idx)
-    form = EditOfferForm()
+    return redirect(url_for('offers.offers'))
 
-    if request.method == 'GET':
-        form.id.data = offer.id
-        form.year.data = offer.year
-        form.offer_number.data = offer.offer_number
-        form.offer_version.data = offer.offer_version
+    # Temporary disabled offer edit. Probably, in the future this option will be permanently removed.
 
-    clients = []
-    for client in Client.get_all_names_and_surnames():
-        clients.append((client[0], client[1] + ' ' + client[2]))
-
-    form.client.choices = clients
-    if request.method == 'GET':
-        form.client.data = offer.user_id
-
-    users = User.get_all_initials()
-    form.user.choices = users
-    if request.method == 'GET':
-        form.user.data = offer.user_id
-
-    if form.validate_on_submit():
-        offer.year = form.year.data
-        offer.offer_number = form.offer_number.data
-        offer.offer_version = form.offer_version.data
-        offer.client_id = form.client.data
-        offer.user_id = form.user.data
-
-        db.session.commit()
-
-        return redirect(url_for('offers.offers'))
-
-    return render_template('edit_offer.html', form=form)
+    # offer = Offer.get_by_id(idx)
+    # form = EditOfferForm()
+    #
+    # if request.method == 'GET':
+    #     form.id.data = offer.id
+    #     form.year.data = offer.year
+    #     form.offer_number.data = offer.offer_number
+    #     form.offer_version.data = offer.offer_version
+    #
+    # clients = []
+    # for client in Client.get_all_names_and_surnames():
+    #     clients.append((client[0], client[1] + ' ' + client[2]))
+    #
+    # form.client.choices = clients
+    # if request.method == 'GET':
+    #     form.client.data = offer.user_id
+    #
+    # users = User.get_all_initials()
+    # form.user.choices = users
+    # if request.method == 'GET':
+    #     form.user.data = offer.user_id
+    #
+    # if form.validate_on_submit():
+    #     offer.year = form.year.data
+    #     offer.offer_number = form.offer_number.data
+    #     offer.offer_version = form.offer_version.data
+    #     offer.client_id = form.client.data
+    #     offer.user_id = form.user.data
+    #
+    #     db.session.commit()
+    #
+    #     return redirect(url_for('offers.offers'))
+    #
+    # return render_template('edit_offer.html', form=form)
 
 
 @bp_offer.route("/delete/<int:idx>", methods=['GET'])

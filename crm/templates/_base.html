@@ -21,7 +21,7 @@
 </head>
 
 <body class="body">
-<nav id="header" class="header-effect-shrink sticky-top"
+<header id="header" class="header-effect-shrink"
      data-plugin-options="{'stickyEnabled': true, 'stickyEffect': 'shrink', 'stickyEnableOnBoxed': true, 'stickyEnableOnMobile': true, 'stickyChangeLogo': true, 'stickyStartAt': 120, 'stickyHeaderContainerHeight': 70}">
     <div class="header-body border-top-0">
         <div class="header-container container">
@@ -43,32 +43,40 @@
                             <div class="header-nav-main header-nav-main-square header-nav-main-effect-2 header-nav-main-sub-effect-1">
                                 <nav class="collapse">
                                     <ul class="nav nav-pills" id="mainNav">
-                                        <li class="dropdown"><a class="dropdown-item active"
-                                                                href="{{ url_for('main.home') }}"> Strona
-                                            główna </a></li>
-                                        <li class="dropdown"><a class="dropdown-item "
-                                                                href="{{ url_for('users.users') }}"> Użytkownicy</a>
+                                        <li class="dropdown">
+                                            <a class="dropdown-item active"
+                                               href="{{ url_for('main.home') }}"> Strona główna </a>
                                         </li>
-                                        <li class="dropdown"><a class="dropdown-item"
-                                                                href="{{ url_for('clients.clients') }}">Klienci </a>
+                                        <li class="dropdown">
+                                            <a class="dropdown-item "
+                                               href="{{ url_for('users.users') }}"> Użytkownicy</a>
                                         </li>
-                                        <li class="dropdown"><a class="dropdown-item"
-                                                                href="{{ url_for('offers.offers') }}">Oferty</a></li>
+                                        <li class="dropdown">
+                                            <a class="dropdown-item"
+                                               href="{{ url_for('clients.clients') }}">Klienci </a>
+                                        </li>
+                                        <li class="dropdown">
+                                            <a class="dropdown-item"
+                                               href="{{ url_for('offers.offers') }}">Oferty</a>
+                                        </li>
                                         <li>
-                                            <a href="{{ url_for('settings.settings') }}"> <img alt="settings" width="24"
-                                                                                               height="24"
-                                                                                               src="{{ url_for('static', filename='img/settings.png') }}"></a>
+                                            <a href="{{ url_for('settings.settings') }}">
+                                                <img alt="settings" width="24"
+                                                     height="24"
+                                                     src="{{ url_for('static', filename='img/settings.png') }}">
+                                            </a>
                                         </li>
                                     </ul>
                                 </nav>
                             </div>
+                            <button class="btn header-btn-collapse-nav" data-toggle="collapse" data-target=".header-nav-main nav"> <i class="fas fa-bars"></i> </button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</nav>
+</header>
 
 <section>
     <div class="content-wrap pt-30 pb-30">
@@ -79,6 +87,12 @@
     </div>
 </section>
 
-
+<script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
+<script src="{{ url_for('static', filename='vendor/jquery.appear/jquery.appear.min.js') }}"></script>
+<script src="{{ url_for('static', filename='vendor/jquery.easing/jquery.easing.min.js') }}"></script>
+<script src="{{ url_for('static', filename='vendor/popper/umd/popper.min.js') }}"></script>
+<script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.min.js') }}"></script>
+<script src="{{ url_for('static', filename='/js/theme.js') }}"></script>
+<script src="{{ url_for('static', filename='/js/theme.init.js') }}"></script>
 </body>
 </html>

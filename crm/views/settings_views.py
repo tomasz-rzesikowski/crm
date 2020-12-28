@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, url_for, request
 from werkzeug.utils import redirect
 
-from ..settings import Settings
+from ..utils import Settings
 from ..forms import SettingsForm
 
 
@@ -15,11 +15,13 @@ def settings():
 
     if request.method == 'GET':
         form.main_folder_path.data = settings.settings['MAIN_FOLDER_PATH']
+        form.standard_folder_path.data = settings.settings['STANDARD_FOLDER_PATH']
         form.db_location.data = settings.settings['DB_PATH']
         form.create_folders.data = settings.settings['CREATE']
 
     if form.validate_on_submit():
         settings.settings['MAIN_FOLDER_PATH'] = form.main_folder_path.data
+        settings.settings['STANDARD_FOLDER_PATH'] = form.main_folder_path.data
         settings.settings['DB_PATH'] = form.db_location.data
         settings.settings['CREATE'] = form.create_folders.data
 

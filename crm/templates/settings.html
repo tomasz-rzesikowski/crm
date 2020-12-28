@@ -25,6 +25,10 @@
                 </td>
 
                 <td>
+                    {{ macros.form_field(form.standard_folder_path) }}
+                </td>
+
+                <td>
                     {{ macros.form_field(form.db_location) }}
                 </td>
             </tr>
@@ -32,6 +36,7 @@
                 <td>
                     {{ macros.form_field(form.create_folders) }}
                 </td>
+                <td></td>
                 <td>
                     {{ form.submit(class="btn btn-primary custom-btn-style-1 text-uppercase text-color-light custom-font-weight-medium") }}
                 </td>

@@ -38,6 +38,13 @@
 
                 <td colspan="2">
                     {{ form.submit(class="btn btn-primary custom-btn-style-1 text-uppercase text-color-light custom-font-weight-medium") }}
+                    {% if form.submit.errors %}
+                        <ul class="errors">
+                            {% for error in form.submit.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
                 </td>
             </tr>
         </table>

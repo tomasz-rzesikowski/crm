@@ -1,3 +1,0 @@
-MAIN_FOLDER_PATH=to_set
-DB_PATH=to_set
-CREATE=Nie

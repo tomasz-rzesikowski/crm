@@ -10,8 +10,13 @@ class SettingsForm(FlaskForm):
         validators=[DataRequired()]
     )
 
+    standard_folder_path = StringField(
+        'Ścieżka do folderu z folderem _standard',
+        validators=[DataRequired()]
+    )
+
     db_location = StringField(
-        'Ścieżka do głównego folderu',
+        'Ścieżka do folderu z bazą danych',
         validators=[DataRequired()]
     )
 

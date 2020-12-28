@@ -17,5 +17,19 @@
 <h2>
     CRM
 </h2>
+    {% if init_view %}
+
+        <section>
+        Najpierw ustaw ścieżki do plików<br>
+                            <button class="btn btn-primary custom-btn-style-1 text-uppercase text-color-light custom-font-weight-medium">
+                                            <a href="{{ url_for('settings.settings') }}">
+                                                <img alt="settings" width="24"
+                                                     height="24"
+                                                     src="{{ url_for('static', filename='img/settings.png') }}">
+                                            </a>
+                </button>
+
+        </section>
+    {% endif %}
 
 {% endblock %}

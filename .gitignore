@@ -4,3 +4,5 @@
 migrations
 crm/static/css
 crm/static/img/private
+crm/static/js/theme.init.js
+crm/static/js/theme.js
