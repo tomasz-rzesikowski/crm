@@ -1,21 +1,24 @@
 from flask import Blueprint, render_template, redirect, url_for, request
+from flask_login import login_required
 
 from crm import db
 from ..utils import FileHandler
-from ..forms import NewOfferForm, EditOfferForm
-from ..models import User, Client
+from ..forms import NewOfferForm
+from ..models import User
 from ..models import Offer
 
 bp_offer = Blueprint('offers', __name__, url_prefix='/offers')
 
 
 @bp_offer.route('', methods=['GET'])
+@login_required
 def offers():
     offers = Offer.get_all_with_users_initials()
     return render_template('offers.html', offers=offers)
 
 
 @bp_offer.route('/add', methods=['GET', 'POST'])
+@login_required
 def add():
     form = NewOfferForm()
 
@@ -40,6 +43,7 @@ def add():
 
 
 @bp_offer.route("/edit/<int:idx>", methods=['GET', 'POST'])
+@login_required
 def edit(idx):
     return redirect(url_for('offers.offers'))
 
@@ -82,6 +86,7 @@ def edit(idx):
 
 
 @bp_offer.route("/delete/<int:idx>", methods=['GET'])
+@login_required
 def delete(idx):
     offer = Offer.get_by_id(idx)
     db.session.delete(offer)

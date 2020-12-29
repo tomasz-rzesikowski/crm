@@ -22,7 +22,7 @@
 
 <body class="body">
 <header id="header" class="header-effect-shrink"
-     data-plugin-options="{'stickyEnabled': true, 'stickyEffect': 'shrink', 'stickyEnableOnBoxed': true, 'stickyEnableOnMobile': true, 'stickyChangeLogo': true, 'stickyStartAt': 120, 'stickyHeaderContainerHeight': 70}">
+        data-plugin-options="{'stickyEnabled': true, 'stickyEffect': 'shrink', 'stickyEnableOnBoxed': true, 'stickyEnableOnMobile': true, 'stickyChangeLogo': true, 'stickyStartAt': 120, 'stickyHeaderContainerHeight': 70}">
     <div class="header-body border-top-0">
         <div class="header-container container">
             <div class="header-row">
@@ -60,6 +60,14 @@
                                                href="{{ url_for('offers.offers') }}">Oferty</a>
                                         </li>
                                         <li>
+                                            {% if current_user.is_authenticated %}
+                                                <a class="nav-link"
+                                                   href="{{ url_for('auth.logout') }}">Wyloguj</a>
+                                            {% else %}
+                                                <a class="nav-link" href="{{ url_for('auth.login') }}" tabindex="-1">Zaloguj</a>
+                                            {% endif %}
+                                        </li>
+                                        <li>
                                             <a href="{{ url_for('settings.settings') }}">
                                                 <img alt="settings" width="24"
                                                      height="24"
@@ -69,7 +77,8 @@
                                     </ul>
                                 </nav>
                             </div>
-                            <button class="btn header-btn-collapse-nav" data-toggle="collapse" data-target=".header-nav-main nav"> <i class="fas fa-bars"></i> </button>
+                            <button class="btn header-btn-collapse-nav" data-toggle="collapse"
+                                    data-target=".header-nav-main nav"><i class="fas fa-bars"></i></button>
                         </div>
                     </div>
                 </div>

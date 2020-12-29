@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from regex import regex
-from wtforms import StringField, SubmitField, IntegerField, HiddenField
-from wtforms.validators import Email, DataRequired, ValidationError
+from wtforms import StringField, SubmitField, HiddenField, PasswordField, BooleanField
+from wtforms.validators import Email, DataRequired, ValidationError, EqualTo
 
 from ..models import User
 
@@ -106,6 +106,9 @@ class UserForm(FlaskForm):
 
 class NewUserForm(UserForm):
     submit = SubmitField('Stwórz użytkownika')
+    password = PasswordField('Hasło',
+                             validators=[DataRequired(), EqualTo('password2', message='Hasła muszą się zgadzać.')])
+    password2 = PasswordField('Powtórz hasło', validators=[DataRequired()])
 
 
 class EditUserForm(UserForm):
@@ -115,3 +118,10 @@ class EditUserForm(UserForm):
 
 class DeleteUserForm(FlaskForm):
     submit = SubmitField('Usuń')
+
+
+class LoginForm(FlaskForm):
+    initials = StringField('Inicjały', validators=[DataRequired()])
+    password = PasswordField('Hasło', validators=[DataRequired()])
+    remember_me = BooleanField('Pozostaw mnie zalogowanym')
+    submit = SubmitField('Zaloguj się')

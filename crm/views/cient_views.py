@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, url_for, request
+from flask_login import login_required
 from werkzeug.utils import redirect
 
 from crm import db
@@ -9,18 +10,21 @@ bp_client = Blueprint('clients', __name__, url_prefix='/clients')
 
 
 @bp_client.route('/', methods=['GET'])
+@login_required
 def clients():
     clients = Client.get_all()
     return render_template('clients.html', clients=clients)
 
 
 @bp_client.route('/<idx>', methods=['GET'])
+@login_required
 def client(idx):
     client = Client.get_by_id(idx)
     return render_template('client.html', client=client)
 
 
 @bp_client.route('/add', methods=['GET', 'POST'])
+@login_required
 def add():
     form = NewClientForm()
 
@@ -42,6 +46,7 @@ def add():
 
 
 @bp_client.route("/edit/<int:idx>", methods=['GET', 'POST'])
+@login_required
 def edit(idx):
     client = Client.get_by_id(idx)
     form = EditClientForm()
@@ -73,6 +78,7 @@ def edit(idx):
 
 
 @bp_client.route("/delete/<int:idx>", methods=['GET'])
+@login_required
 def delete(idx):
     client = Client.get_by_id(idx)
     db.session.delete(client)

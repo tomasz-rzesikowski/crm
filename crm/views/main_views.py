@@ -1,8 +1,15 @@
 from flask import Blueprint, render_template
 
+from crm import login_manager
+from ..models import User
 from ..utils import Settings
 
 bp_main = Blueprint('main', __name__, url_prefix='/')
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.get_by_id(int(user_id))
 
 
 @bp_main.route('/')

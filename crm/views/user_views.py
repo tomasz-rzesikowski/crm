@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, url_for, request
+from flask_login import login_required
 from werkzeug.utils import redirect
 
 from crm import db
@@ -9,9 +10,17 @@ bp_user = Blueprint('users', __name__, url_prefix='/users', template_folder='tem
 
 
 @bp_user.route('/', methods=['GET'])
+@login_required
 def users():
     users = User.get_all()
     return render_template('users.html', users=users)
+
+
+@bp_user.route('/<initials>', methods=['GET'])
+@login_required
+def user(initials):
+    user = User.get_by_initials(initials=initials)
+    return render_template('user.html')
 
 
 @bp_user.route('/add', methods=['GET', 'POST'])
@@ -23,7 +32,8 @@ def add():
                     surname=form.surname.data,
                     initials=form.initials.data,
                     phone=form.phone.data,
-                    email=form.email.data)
+                    email=form.email.data,
+                    password=form.password.data)
 
         db.session.add(user)
         db.session.commit()
@@ -34,6 +44,7 @@ def add():
 
 
 @bp_user.route("/edit/<int:idx>", methods=['GET', 'POST'])
+@login_required
 def edit(idx):
     user = User.get_by_id(idx)
     form = EditUserForm()
@@ -61,8 +72,10 @@ def edit(idx):
 
 
 @bp_user.route("/delete/<int:idx>", methods=['GET'])
+@login_required
 def delete(idx):
     user = User.get_by_id(idx)
     db.session.delete(user)
     db.session.commit()
     return redirect(url_for('users.users'))
+

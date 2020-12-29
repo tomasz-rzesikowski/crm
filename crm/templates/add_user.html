@@ -19,26 +19,34 @@
         {{ form.hidden_tag() }}
         <table class="table table-bordered stage-margin">
             <tr>
-                <td class="col-md-6">
+                <td class="col-md-4">
                     {{ macros.form_field(form.name) }}
                 </td>
-                <td class="col-md-6">
+                <td class="col-md-4">
                     {{ macros.form_field(form.surname) }}
                 </td>
-            </tr>
-            <tr>
-                <td class="col-md-6">
+                <td class="col-md-4">
                     {{ macros.form_field(form.initials) }}
                 </td>
-                <td class="col-md-6">
+            </tr>
+            <tr>
+
+                <td class="col-md-4">
                     {{ macros.form_field(form.phone) }}
+                </td>
+                <td class="col-md-4">
+                    {{ macros.form_field(form.email) }}
                 </td>
             </tr>
             <tr>
-                <td class="col-md-6">
-                    {{ macros.form_field(form.email) }}
+
+                <td class="col-md-4">
+                    {{ macros.form_field(form.password) }}
                 </td>
-                <td class="col-md-6">
+                <td class="col-md-4">
+                    {{ macros.form_field(form.password2) }}
+                </td>
+                <td class="col-md-4">
                     {{ form.submit(class="btn btn-primary custom-btn-style-1 text-uppercase text-color-light custom-font-weight-medium") }}
                 </td>
             </tr>

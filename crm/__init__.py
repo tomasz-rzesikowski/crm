@@ -1,14 +1,14 @@
 import os
 
 from flask import Flask
-from flask_migrate import Migrate
+from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy_utils import database_exists
 
 from .utils import Settings
 
 db = SQLAlchemy()
-basedir = os.path.abspath(os.path.dirname(__file__))
+login_manager = LoginManager()
 
 
 def create_app():
@@ -24,6 +24,7 @@ def create_app():
     crm_app.register_blueprint(views.bp_client)
     crm_app.register_blueprint(views.bp_offer)
     crm_app.register_blueprint(views.bp_settings)
+    crm_app.register_blueprint(views.bp_auth)
 
     db.init_app(crm_app)
 
@@ -31,6 +32,8 @@ def create_app():
         with crm_app.app_context():
             db.create_all()
 
-    Migrate(crm_app, db)
+    login_manager.init_app(crm_app)
+    login_manager.session_protection = 'strong'
+    login_manager.login_view = 'auth.login'
 
     return crm_app

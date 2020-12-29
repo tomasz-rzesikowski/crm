@@ -1,0 +1,56 @@
+{% extends "_base.html" %}
+{% from "macros.html" import form_field %}
+{% block content %}
+    <section class="page-header page-header-classic page-header-sm" style="margin-top: -10px; position: relative">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 order-2 order-md-1 align-self-center p-static">
+                    <h1>ZALOGUJ SIĘ</h1>
+                </div>
+                <div class="col-md-4 order-1 order-md-2 align-self-center">
+                    <ul class="breadcrumb d-block text-md-right">
+                        <li class="active">ZALOGUJ SIĘ</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    <form action="" method="post" novalidate class="container">
+        {{ login_form.hidden_tag() }}
+
+
+        <table class="table table-bordered stage-margin">
+            <tr>
+                <td class="col-md-6">
+                    {{ form_field(login_form.initials) }}
+                </td>
+
+                <td class="col-md-6">
+                    {{ form_field(login_form.password) }}
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-6">
+                    {{ form_field(login_form.remember_me) }}
+                </td>
+
+                <td class="col-md-6">
+                    {{ login_form.submit(class="btn btn-primary custom-btn-style-1 text-uppercase text-color-light custom-font-weight-medium") }}
+                </td>
+            </tr>
+        </table>
+    </form>
+    <table>
+        <tr>
+            <td class="col-md-2" colspan="3">
+                <button class="btn btn-primary custom-btn-style-1">
+                    <a class="text-uppercase text-color-light custom-font-weight-medium unde" href="{{ url_for('users.add') }}">
+                        Utwórz konto
+                    </a>
+                </button>
+            </td>
+        </tr>
+    </table>
+
+{% endblock %}
