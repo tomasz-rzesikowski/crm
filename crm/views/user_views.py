@@ -3,6 +3,7 @@ from flask_login import login_required
 from werkzeug.utils import redirect
 
 from crm import db
+from ..utils import FolderHandler
 from ..forms import NewUserForm, EditUserForm
 from ..models import User
 
@@ -34,6 +35,8 @@ def add():
                     phone=form.phone.data,
                     email=form.email.data,
                     password=form.password.data)
+
+        FolderHandler.create_user_folder(user.initials)
 
         db.session.add(user)
         db.session.commit()

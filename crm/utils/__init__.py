@@ -1,2 +1,3 @@
-from .file_handler import FileHandler
+from .folder_handler import FolderHandler
 from .settings import Settings
+

@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, redirect, url_for, request
 from flask_login import login_required
 
 from crm import db
-from ..utils import FileHandler
+from ..utils import FolderHandler
 from ..forms import NewOfferForm
 from ..models import User
 from ..models import Offer
@@ -35,7 +35,7 @@ def add():
         db.session.add(offer)
         db.session.commit()
 
-        FileHandler.create_offer_file(offer)
+        FolderHandler.create_offer_folder(offer)
 
         return redirect(url_for('offers.offers'))
 
@@ -92,6 +92,6 @@ def delete(idx):
     db.session.delete(offer)
     db.session.commit()
 
-    FileHandler.delete_offer_file(offer)
+    FolderHandler.delete_offer_folder(offer)
 
     return redirect(url_for('offers.offers'))

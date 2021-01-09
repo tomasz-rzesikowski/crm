@@ -2,12 +2,13 @@ import os
 
 from flask import Flask
 from flask_login import LoginManager
+from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy_utils import database_exists
 
 from .utils import Settings
-
 db = SQLAlchemy()
+
 login_manager = LoginManager()
 
 
@@ -25,12 +26,15 @@ def create_app():
     crm_app.register_blueprint(views.bp_offer)
     crm_app.register_blueprint(views.bp_settings)
     crm_app.register_blueprint(views.bp_auth)
+    crm_app.register_blueprint(views.bp_note)
 
     db.init_app(crm_app)
 
     if database_exists(crm_app.config['SQLALCHEMY_DATABASE_URI']) is False:
         with crm_app.app_context():
             db.create_all()
+
+    Migrate(crm_app, db)
 
     login_manager.init_app(crm_app)
     login_manager.session_protection = 'strong'
