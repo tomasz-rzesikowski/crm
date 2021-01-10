@@ -29,7 +29,7 @@
                 <div class="header-column">
                     <div class="header-row">
                         <div class="header-logo">
-                            <a href="{{ url_for('main.home') }}"> <img alt="AG-PROJEKT" width="60" height="132"
+                            <a href="{{ url_for('main.index') }}"> <img alt="AG-PROJEKT" width="60" height="132"
                                                                        data-sticky-width="35"
                                                                        data-sticky-height="70"
                                                                        src="{{ url_for('static', filename='img/private/logo-agprojekt.png') }}">
@@ -45,23 +45,23 @@
                                     <ul class="nav nav-pills" id="mainNav">
                                         <li class="dropdown">
                                             <a class="dropdown-item active"
-                                               href="{{ url_for('main.home') }}"> Strona główna </a>
+                                               href="{{ url_for('main.index') }}"> Strona główna </a>
                                         </li>
                                         <li class="dropdown">
                                             <a class="dropdown-item "
-                                               href="{{ url_for('users.users') }}"> Użytkownicy</a>
+                                               href="{{ url_for('user.users') }}"> Użytkownicy</a>
                                         </li>
                                         <li class="dropdown">
                                             <a class="dropdown-item"
-                                               href="{{ url_for('clients.clients') }}">Klienci </a>
+                                               href="{{ url_for('client.clients') }}">Klienci </a>
                                         </li>
                                         <li class="dropdown">
                                             <a class="dropdown-item"
-                                               href="{{ url_for('offers.offers') }}">Oferty</a>
+                                               href="{{ url_for('offer.offers') }}">Oferty</a>
                                         </li>
                                         <li class="dropdown">
                                             <a class="dropdown-item"
-                                               href="{{ url_for('notes.notes') }}">Notatki</a>
+                                               href="{{ url_for('note.notes') }}">Notatki</a>
                                         </li>
                                         <li>
                                             {% if current_user.is_authenticated %}

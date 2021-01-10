@@ -1,3 +1,2 @@
 from .folder_handler import FolderHandler
-from .settings import Settings
-
+from .custom_validators import proper_regexp

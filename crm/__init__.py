@@ -6,7 +6,8 @@ from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy_utils import database_exists
 
-from .utils import Settings
+
+from .settings import Settings
 db = SQLAlchemy()
 
 login_manager = LoginManager()
@@ -15,18 +16,24 @@ login_manager = LoginManager()
 def create_app():
     crm_app = Flask(__name__)
 
-    from . import views
+    from .main import bp_main
+    from .user import bp_user
+    from .auth import bp_auth
+    from .client import bp_client
+    from .offer import bp_offer
+    from .note import bp_note
+    from .settings import bp_settings
 
     crm_app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{os.path.join(Settings.get_instance().settings['STANDARD_FOLDER_PATH'], 'crm.db')}"
     crm_app.config['SECRET_KEY'] = b'\x1aB\xd6\x15\x98\x9ebfk\xfd\xb1b\x06\x0fQ\x81\x0c\x07\xfe&\xc1\x84\x9dU'
 
-    crm_app.register_blueprint(views.bp_main)
-    crm_app.register_blueprint(views.bp_user)
-    crm_app.register_blueprint(views.bp_client)
-    crm_app.register_blueprint(views.bp_offer)
-    crm_app.register_blueprint(views.bp_settings)
-    crm_app.register_blueprint(views.bp_auth)
-    crm_app.register_blueprint(views.bp_note)
+    crm_app.register_blueprint(bp_main, url_prefix='/')
+    crm_app.register_blueprint(bp_user, url_prefix='/user')
+    crm_app.register_blueprint(bp_auth, url_prefix='/auth')
+    crm_app.register_blueprint(bp_client, url_prefix='/client')
+    crm_app.register_blueprint(bp_offer, url_prefix='/offer')
+    crm_app.register_blueprint(bp_note, url_prefix='/note')
+    crm_app.register_blueprint(bp_settings, url_prefix='/settings')
 
     db.init_app(crm_app)
 

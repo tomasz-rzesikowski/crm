@@ -1,0 +1,53 @@
+{% extends "_base.html" %}
+{% import "macros.html" as macros %}
+
+{% block content %}
+    <section class="page-header page-header-classic page-header-sm" style="margin-top: -10px; position: relative">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 order-2 order-md-1 align-self-center p-static">
+                    <h1>OFERTY</h1>
+                </div>
+                <div class="col-md-4 order-1 order-md-2 align-self-center">
+                    <ul class="breadcrumb d-block text-md-right">
+                        <li class="active">OFERTY</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    <table class="table table-striped table-bordered ">
+        <thead>
+        <tr>
+            <th>Rok</th>
+            <th>Numer oferty</th>
+            <th>Klient</th>
+            <th>Kierownik</th>
+            <th colspan="3">Opcje</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        {% for offer in offers %}
+            <tr>
+                <td>{{ offer.year }}</td>
+                <td>{{ offer.offer_number }}{{ offer.offer_version }}</td>
+                <td>{{ offer.name }} {{ offer.surname }}</td>
+                <td>{{ offer.initials }}</td>
+                <td>
+                    <a class="btn btn-primary custom-btn-style-1 text-uppercase text-color-light custom-font-weight-medium"
+                       href="{{ url_for('offer.edit', idx=offer.id) }}">Edytuj</a></td>
+                <td><a
+                        class="btn btn-primary custom-btn-style-1 text-uppercase text-color-light custom-font-weight-medium"
+                        href="{{ url_for('note.add', offer_id=offer.id) }}">Dodaj notatkę</a></td>
+                <td>
+                    <a class="btn btn-primary custom-btn-style-1 text-uppercase text-color-light custom-font-weight-medium"
+                       data-method="POST" href="{{ url_for('offer.delete', idx=offer.id) }}"
+                       rel="nofollow">Usuń</a></td>
+            <tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+    {#    <a class="btn btn-primary custom-btn-style-1 text-uppercase text-color-light custom-font-weight-medium" href="{{ url_for('offer.add') }}">Dodaj ofertę</a>#}
+{% endblock %}

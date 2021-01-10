@@ -1,7 +1,7 @@
 import os
 import shutil
 
-from .settings import Settings
+from ..settings import Settings
 
 
 class FolderHandler:
@@ -20,7 +20,7 @@ class FolderHandler:
 
     @staticmethod
     def get_user_folder_path(user_initials):
-        basedir = Settings.get_instance().settings['DB_PATH']
+        basedir = Settings.get_instance().settings['CONFIG_FOLDER_PATH']
 
         folder_path = os.path.join(basedir,
                                    user_initials)
@@ -29,7 +29,7 @@ class FolderHandler:
 
     @staticmethod
     def create_offer_folder(offer):
-        if Settings.get_instance().settings['CREATE'] == 'Tak':
+        if Settings.get_instance().settings['CREATE'] == 'True':
             basedir = Settings.get_instance().settings['MAIN_FOLDER_PATH']
             standard_dir = os.path.join(Settings.get_instance().settings['STANDARD_FOLDER_PATH'], '_STANDARD')
 
@@ -53,7 +53,7 @@ class FolderHandler:
 
     @staticmethod
     def delete_offer_folder(offer):
-        if Settings.get_instance().settings['CREATE'] == 'Tak':
+        if Settings.get_instance().settings['CREATE'] == 'True':
             basedir = Settings.get_instance().settings['MAIN_FOLDER_PATH']
 
             folder_path = os.path.join(basedir, str(offer.year), str(offer.offer_number), '2.Oferty',
@@ -66,7 +66,7 @@ class FolderHandler:
 
     @staticmethod
     def find_offer_folder(offer):
-        if Settings.get_instance().settings['CREATE'] == 'Tak':
+        if Settings.get_instance().settings['CREATE'] == 'True':
             folder_path = FolderHandler.get_offer_folder_path(offer)
 
             return os.path.isdir(folder_path)

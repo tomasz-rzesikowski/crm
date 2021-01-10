@@ -5,8 +5,8 @@ from flask import send_from_directory
 from werkzeug.utils import secure_filename
 
 from crm import Settings
+from ..offer import Offer
 from . import FolderHandler
-from ..models import Offer
 
 path = os.path.abspath(os.path.dirname(__file__))
 
