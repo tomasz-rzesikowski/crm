@@ -29,4 +29,4 @@ def settings():
 
         return redirect(url_for('settings.settings'))
 
-    return render_template('settings.html', form=form)
+    return render_template('settings.html', form=form, title='Ustawienia')

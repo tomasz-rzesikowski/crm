@@ -1,2 +1,7 @@
-
-<h1>{{ current_user.initials }}</h1>
+{% extends "partials/_two_column.html" %}
+{% block main_content %}
+    {% include "_offers_table.html" %}
+{% endblock %}
+{% block aside %}
+    {% include "_note_table.html" %}
+{% endblock %}

@@ -1,44 +1,35 @@
-{% extends "_base.html" %}
-{% import "macros.html" as macros %}
+{% extends "partials/_base.html" %}
+{% from "macros/form_field_macros.html" import render_field %}
 {% block content %}
-    <section class="page-header page-header-classic page-header-sm" style="margin-top: -10px; position: relative">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-8 order-2 order-md-1 align-self-center p-static">
-                    <h1>USTAWIENIA</h1>
-                </div>
-                <div class="col-md-4 order-1 order-md-2 align-self-center">
-                    <ul class="breadcrumb d-block text-md-right">
-                        <li class="active">USTAWIENIA</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <form action="" method="post" novalidate class="container">
         {{ form.hidden_tag() }}
-        <table class="table table-bordered stage-margin">
+        <table class="table table-borderless">
             <tr>
                 <td>
-                    {{ macros.form_field(form.main_folder_path) }}
+                    {{ render_field(form.main_folder_path) }}
                 </td>
 
                 <td>
-                    {{ macros.form_field(form.standard_folder_path) }}
+                    {{ render_field(form.standard_folder_path) }}
                 </td>
 
                 <td>
-                    {{ macros.form_field(form.db_location) }}
+                    {{ render_field(form.db_location) }}
                 </td>
             </tr>
             <tr>
-                <td>
-                    {{ macros.form_field(form.create_folders) }}
+                <td class="align-middle">
+
+                    <div class="form-check form-switch">
+                        {{ form.create_folders(class="form-check-input") }}
+                        {{ form.create_folders.label(class="form-check-label") }}
+                    </div>
                 </td>
                 <td></td>
                 <td>
-                    {{ form.submit(class="btn btn-primary custom-btn-style-1 text-uppercase text-color-light custom-font-weight-medium") }}
+
+
+                    {{ form.submit(class="btn btn-custom") }}
                 </td>
             </tr>
         </table>

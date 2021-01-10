@@ -9,9 +9,9 @@ bp_main = Blueprint('main', __name__, template_folder='templates')
 @bp_main.route('/')
 def index():
     if Settings.get_instance().settings['STANDARD_FOLDER_PATH'] == '':
-        return render_template('index.html', init_view=True)
+        return render_template('index.html', init_view=True, title='Strona główna')
 
     if current_user.is_authenticated:
         return redirect(url_for('user.user'))
 
-    return render_template('index.html', init_view=False)
+    return render_template('index.html', init_view=False, title='Strona główna')

@@ -20,7 +20,7 @@ def uploads(filename):
 @login_required
 def notes():
     notes = Note.get_all_with_users()
-    return render_template('notes.html', notes=notes)
+    return render_template('notes.html', notes=notes, title='Notatki')
 
 
 @bp_note.route('/<idx>', methods=['GET'])
@@ -28,9 +28,11 @@ def notes():
 def note(idx):
     note = Note.get_by_id_with_user(idx)
     form = DeleteNoteForm()
-    image_list = get_image_list(note)
+    image_list = ''
+    if note.image:
+        image_list = get_image_list(note)
 
-    return render_template('note.html', note=note, form=form, image_list=image_list)
+    return render_template('note.html', note=note, form=form, image_list=image_list, title='Szczegóły notatki')
 
 
 @bp_note.route('/add', methods=['GET', 'POST'])
@@ -55,14 +57,16 @@ def add():
         db.session.add(note)
         db.session.flush()
 
+
         filename = save_image_uploads(form.images, note, current_user.initials)
 
-        note.image = filename
+        if filename:
+            note.image = filename
 
         db.session.commit()
 
         return redirect(url_for('note.notes'))
-    return render_template('add_note.html', form=form)
+    return render_template('add_note.html', form=form, title='Dodawanie notatki')
 
 
 @bp_note.route("/delete/<int:idx><delete_img>", methods=['GET'])
@@ -73,7 +77,7 @@ def delete(idx, delete_img):
     db.session.delete(note)
     db.session.commit()
 
-    if delete_img:
+    if delete_img == 'True':
         delete_images(note)
 
     return redirect(url_for('note.notes'))

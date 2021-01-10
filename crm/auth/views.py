@@ -19,10 +19,10 @@ def login():
 
         if user is not None and user.check_password(form.password.data):
             login_user(user, remember=form.remember_me.data)
-            return redirect(request.args.get('next') or url_for('main.index', initials=user.initials))
+            return redirect(request.args.get('next') or url_for('main.index'))
 
-        return render_template('login.html', form=form)
-    return render_template('login.html', form=form)
+        return render_template('login.html', form=form, title='Logowanie')
+    return render_template('login.html', form=form, title='Logowanie')
 
 
 @bp_auth.route('/logout', methods=['GET', 'POST'])

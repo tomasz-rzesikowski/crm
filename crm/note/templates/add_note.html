@@ -1,48 +1,26 @@
-{% extends "_base.html" %}
-{% import "macros.html" as macros %}
+{% extends "partials/_base.html" %}
+{% from "macros/form_field_macros.html" import render_field%}
 {% block content %}
-    <section class="page-header page-header-classic page-header-sm" style="margin-top: -10px; position: relative">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-8 order-2 order-md-1 align-self-center p-static">
-                    <h1>DODAJ OFERTĘ</h1>
-                </div>
-                <div class="col-md-4 order-1 order-md-2 align-self-center">
-                    <ul class="breadcrumb d-block text-md-right">
-                        <li class="active">DODAJ OFERTĘ</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
     <form action="" method="post" novalidate class="container" enctype="multipart/form-data">
         {{ form.hidden_tag() }}
-        <table class="table table-bordered stage-margin">
+        <table class="table table-borderless">
             <tr>
                 <td class="col-md-6">
-                    {{ macros.form_field(form.title) }}
+                    {{ render_field(form.title) }}
                 </td>
                 <td class="col-md-6">
-                    {{ macros.form_field(form.description) }}
+                    {{ render_field(form.description) }}
                 </td>
             </tr>
             <tr>
                 <td class="col-md-6">
-                    {{ macros.form_field(form.images) }}
+                    {{ render_field(form.images) }}
                 </td>
-                <td class="col-md-6">
-
+                <td class="col-md-6 align-middle">
                     <div class="form-check form-switch">
                         {{ form.on_todo_list(class="form-check-input") }}
                         {{ form.on_todo_list.label(class="form-check-label") }}
                     </div>
-                    {% if form.on_todo_list.errors %}
-                        <ul class="errors">
-                            {% for error in form.on_todo_list.errors %}
-                                <li>{{ error }}</li>
-                            {% endfor %}
-                        </ul>
-                    {% endif %}
                 </td>
             </tr>
             <tr>
@@ -59,7 +37,7 @@
                     {% endif %}
                 </td>
                 <td>
-                    {{ form.submit(class="btn btn-primary custom-btn-style-1 text-uppercase text-color-light custom-font-weight-medium") }}
+                    {{ form.submit(class="btn btn-custom") }}
                     {% if form.submit.errors %}
                         <ul class="errors">
                             {% for error in form.submit.errors %}

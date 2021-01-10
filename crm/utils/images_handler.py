@@ -23,13 +23,18 @@ def save_image_uploads(images, note, user_initials):
 
     joined_files_names = ''
     for i, img in enumerate(images.data):
+        print(img.filename)
+        if img.filename != '':
+            print('test')
+            print(img.filename)
+            file_name = '_'.join([base_file_name, str(note.id), str(i), img.filename])
 
-        file_name = '_'.join([base_file_name, str(note.id), str(i), img.filename])
+            file_name = secure_filename(file_name)
+            img.save(os.path.join(uploads_path, file_name))
 
-        file_name = secure_filename(file_name)
-        img.save(os.path.join(uploads_path, file_name))
-
-        joined_files_names += ',' + file_name
+            joined_files_names += ',' + file_name
+        else:
+            return False
 
     return joined_files_names[1:]
 

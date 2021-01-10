@@ -3,6 +3,8 @@ from flask_login import login_required, current_user
 from werkzeug.utils import redirect
 
 from crm import db
+from ..offer import Offer
+from ..note import Note
 from ..utils import FolderHandler
 from .forms import NewUserForm, EditUserForm
 from .models import User
@@ -14,14 +16,15 @@ bp_user = Blueprint('user', __name__, template_folder='templates')
 @login_required
 def users():
     users = User.get_all()
-    return render_template('users.html', users=users)
+    return render_template('users.html', users=users, title='Użytkownicy')
 
 
 @bp_user.route('/', methods=['GET'])
 @login_required
 def user():
-    # user = current_user
-    return render_template('user.html')
+    offers = Offer.get_all_with_client_by_user(current_user.id)
+    todos = Note.get_todos(current_user.id)
+    return render_template('user.html', offers=offers, notes=todos, title='Strona główna')
 
 
 @bp_user.route('/add', methods=['GET', 'POST'])
@@ -42,7 +45,7 @@ def add():
         db.session.commit()
 
         return redirect(url_for('user.users'))
-    return render_template('add_user.html', form=form)
+    return render_template('add_user.html', form=form, title='Dodawanie użytkownika')
 
 
 @bp_user.route("/edit/<int:idx>", methods=['GET', 'POST'])
@@ -61,7 +64,7 @@ def edit(idx):
         db.session.commit()
 
         return redirect(url_for('user.users'))
-    return render_template('edit_user.html', form=form)
+    return render_template('edit_user.html', form=form, title='Edycja użytkownika')
 
 
 @bp_user.route("/delete/<int:idx>", methods=['GET'])

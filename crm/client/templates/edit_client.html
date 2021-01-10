@@ -1,56 +1,42 @@
-{% extends "_base.html" %}
-{% import "macros.html" as macros %}
+{% extends "partials/_base.html" %}
+{% from "macros/form_field_macros.html" import render_field%}
 {% block content %}
-    <section class="page-header page-header-classic page-header-sm" style="margin-top: -10px; position: relative">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-8 order-2 order-md-1 align-self-center p-static">
-                    <h1>EDYTUJ KLIENTA</h1>
-                </div>
-                <div class="col-md-4 order-1 order-md-2 align-self-center">
-                    <ul class="breadcrumb d-block text-md-right">
-                        <li class="active">EDYTUJ KLIENTA</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
 
     <form action="" method="post" novalidate class="container">
         {{ form.hidden_tag() }}
         {{ form.id }}
 
-        <table class="table table-bordered stage-margin">
+        <table class="table table-borderless align-middle">
             <tr>
                 <td>
-                    {{ macros.form_field(form.name) }}
+                    {{ render_field(form.name) }}
                 </td>
                 <td colspan="2">
-                    {{ macros.form_field(form.surname) }}
+                    {{ render_field(form.surname) }}
                 </td>
                 <td>
-                    {{ macros.form_field(form.company) }}
+                    {{ render_field(form.company) }}
                 </td>
             </tr>
             <tr>
                 <td colspan="2">
-                    {{ macros.form_field(form.address_street_and_number) }}
+                    {{ render_field(form.address_street_and_number) }}
                 </td>
                 <td colspan="2">
-                    {{ macros.form_field(form.address_zipcode_and_city) }}
+                    {{ render_field(form.address_zipcode_and_city) }}
                 </td>
             </tr>
             <tr>
                 <td colspan="2">
-                    {{ macros.form_field(form.phone) }}
+                    {{ render_field(form.phone) }}
                 </td>
                 <td colspan="2">
-                    {{ macros.form_field(form.email) }}
+                    {{ render_field(form.email) }}
                 </td>
             </tr>
             <tr>
                 <td colspan="4">
-                    {{ form.submit(class="btn btn-primary custom-btn-style-1 text-uppercase text-color-light custom-font-weight-medium") }}
+                    {{ form.submit(class="btn btn-custom") }}
                 </td>
             </tr>
         </table>

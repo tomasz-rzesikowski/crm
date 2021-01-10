@@ -1,0 +1,16 @@
+{% macro render_field(field) -%}
+        {% if field.type != "SubmitField" and field.widget.input_type != "hidden" %}
+            {{ field.label }}<br>
+        {% endif %}
+
+
+        {{ field( class="form-control") }}
+        {% if field.errors %}
+            <div class="is-invalid">
+                {% for error in field.errors %}
+                    {{ error }}
+                {% endfor %}
+
+            </div>
+        {% endif %}
+{%- endmacro %}

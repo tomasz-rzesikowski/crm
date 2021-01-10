@@ -1,43 +1,29 @@
-{% extends "_base.html" %}
-{% import "macros.html" as macros %}
+{% extends "partials/_base.html" %}
+{% from "macros/form_field_macros.html" import render_field%}
 {% block content %}
-    <section class="page-header page-header-classic page-header-sm" style="margin-top: -10px; position: relative">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-8 order-2 order-md-1 align-self-center p-static">
-                    <h1>DODAJ OFERTĘ</h1>
-                </div>
-                <div class="col-md-4 order-1 order-md-2 align-self-center">
-                    <ul class="breadcrumb d-block text-md-right">
-                        <li class="active">DODAJ OFERTĘ</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
     <form action="" method="post" novalidate class="container">
         {{ form.hidden_tag() }}
-        <table class="table table-bordered stage-margin">
+        <table class="table table-borderless">
             <tr>
                 <td class="col-md-6">
-                    {{ macros.form_field(form.year) }}
+                    {{ render_field(form.year) }}
                 </td>
                 <td class="col-md-6">
-                    {{ macros.form_field(form.offer_number) }}
+                    {{ render_field(form.offer_number) }}
                 </td>
             </tr>
             <tr>
                 <td class="col-md-6">
-                    {{ macros.form_field(form.offer_version) }}
+                    {{ render_field(form.offer_version) }}
                 </td>
                 <td class="col-md-6">
-                    {{ macros.form_field(form.user) }}
+                    {{ render_field(form.user) }}
                 </td>
             </tr>
             <tr>
 
-                <td colspan="2">
-                    {{ form.submit(class="btn btn-primary custom-btn-style-1 text-uppercase text-color-light custom-font-weight-medium") }}
+                <td colspan="2" class="align-middle">
+                    {{ form.submit(class="btn btn-custom") }}
                     {% if form.submit.errors %}
                         <ul class="errors">
                             {% for error in form.submit.errors %}

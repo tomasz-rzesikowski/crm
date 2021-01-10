@@ -1,0 +1,54 @@
+<nav class="navbar navbar-expand-lg navbar-custom">
+    <div class="container text-nav align-items-stretch">
+        <a href="{{ url_for('main.index') }}"> <img alt="PROJEKT" width="60" height="132"
+                                                    data-sticky-width="35"
+                                                    data-sticky-height="70"
+                                                    src="{{ url_for('static', filename='img/private/logo.png') }}">
+        </a>
+
+        <button class="btn " type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end align-baseline" id="navbarSupportedContent">
+            <ul class="nav nav-elements align-items-center">
+                <li class="dropdown">
+                    <a class="dropdown-item text-nav"
+                       href="{{ url_for('main.index') }}"> Strona główna </a>
+                </li>
+                <li class="dropdown">
+                    <a class="dropdown-item text-nav"
+                       href="{{ url_for('user.users') }}"> Użytkownicy</a>
+                </li>
+                <li class="dropdown">
+                    <a class="dropdown-item text-nav"
+                       href="{{ url_for('client.clients') }}">Klienci </a>
+                </li>
+                <li class="dropdown">
+                    <a class="dropdown-item text-nav"
+                       href="{{ url_for('offer.offers') }}">Oferty</a>
+                </li>
+                <li class="dropdown">
+                    <a class="dropdown-item text-nav"
+                       href="{{ url_for('note.notes') }}">Notatki</a>
+                </li>
+                <li>
+                    {% if current_user.is_authenticated %}
+                        <a class="dropdown-item text-nav"
+                           href="{{ url_for('auth.logout') }}">Wyloguj({{ current_user.initials }})</a>
+                    {% else %}
+                        <a class="dropdown-item text-nav" href="{{ url_for('auth.login') }}" tabindex="-1">Zaloguj</a>
+                    {% endif %}
+                </li>
+                <li>
+                    <a href="{{ url_for('settings.settings') }}">
+                        <img alt="settings" width="24"
+                             height="24"
+                             src="{{ url_for('static', filename='img/settings.png') }}">
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

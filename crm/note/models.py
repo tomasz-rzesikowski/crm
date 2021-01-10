@@ -1,4 +1,4 @@
-from sqlalchemy import ForeignKey
+from sqlalchemy import ForeignKey, desc
 
 from crm import db
 from ..user import User
@@ -40,3 +40,7 @@ class Note(db.Model):
     @staticmethod
     def get_by_user_id(user_id):
         return Note.query.filter_by(user_id=user_id).all()
+
+    @staticmethod
+    def get_todos(user_id):
+        return Note.query.filter_by(user_id=user_id, on_todo_list=True).order_by(desc(Note.expire_date)).all()

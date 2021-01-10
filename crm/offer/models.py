@@ -46,3 +46,16 @@ class Offer(db.Model):
             Client.name,
             Client.surname
         ).join(User, Client)
+
+    @staticmethod
+    def get_all_with_client_by_user(user_id):
+        return Offer.query.with_entities(
+            Offer.id,
+            Offer.year,
+            Offer.offer_number,
+            Offer.offer_version,
+            Client.name,
+            Client.surname,
+            Client.address_street_and_number,
+            Client.address_zipcode_and_city
+        ).filter_by(user_id=user_id).join(User, Client)

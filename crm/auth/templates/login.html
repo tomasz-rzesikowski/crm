@@ -1,56 +1,50 @@
-{% extends "_base.html" %}
-{% from "macros.html" import form_field %}
+{% extends "partials/_base.html" %}
+{% from 'macros/form_field_macros.html' import render_field %}
 {% block content %}
-    <section class="page-header page-header-classic page-header-sm" style="margin-top: -10px; position: relative">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-8 order-2 order-md-1 align-self-center p-static">
-                    <h1>ZALOGUJ SIĘ</h1>
-                </div>
-                <div class="col-md-4 order-1 order-md-2 align-self-center">
-                    <ul class="breadcrumb d-block text-md-right">
-                        <li class="active">ZALOGUJ SIĘ</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
     <form action="" method="post" novalidate class="container">
         {{ form.hidden_tag() }}
 
 
-        <table class="table table-bordered stage-margin">
+        <table class="table table-borderless align-middle">
             <tr>
-                <td class="col-md-6">
-                    {{ form_field(form.initials) }}
+                <td class="col-md-2" colspan="3">
+                    {{ render_field(form.initials) }}
                 </td>
 
-                <td class="col-md-6">
-                    {{ form_field(form.password) }}
+                <td class="col-md-2" colspan="3">
+                    {{ render_field(form.password) }}
                 </td>
             </tr>
 
             <tr>
-                <td class="col-md-6">
-                    {{ form_field(form.remember_me) }}
+                <td class="col-md-2" colspan="2">
+                    <div class="form-check form-switch">
+                        {{ form.remember_me(class="form-check-input") }}
+                        {{ form.remember_me.label(class="form-check-label") }}
+                        </div>
                 </td>
 
-                <td class="col-md-6">
-                    {{ form.submit(class="btn btn-primary custom-btn-style-1 text-uppercase text-color-light custom-font-weight-medium") }}
+                <td class="col-md-2" colspan="2">
+                <div>
+                    {{ form.submit(class="btn btn-custom") }}
+                    {% if form.submit.errors %}
+                        <div class="is-invalid">
+                            {% for error in form.submit.errors %}
+                                {{ error }}
+                            {% endfor %}
+
+                        </div>
+                    {% endif %}
+                </div>
+                </td>
+                <td class="col-md-2" colspan="2">
+
+                        <a class="btn btn-custom " href="{{ url_for('user.add') }}">
+                            Utwórz konto
+                        </a>
                 </td>
             </tr>
         </table>
     </form>
-    <table>
-        <tr>
-            <td class="col-md-2" colspan="3">
-                <button class="btn btn-primary custom-btn-style-1">
-                    <a class="text-uppercase text-color-light custom-font-weight-medium unde" href="{{ url_for('user.add') }}">
-                        Utwórz konto
-                    </a>
-                </button>
-            </td>
-        </tr>
-    </table>
 
 {% endblock %}

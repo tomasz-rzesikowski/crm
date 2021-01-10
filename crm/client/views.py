@@ -13,14 +13,14 @@ bp_client = Blueprint('client', __name__, template_folder='templates')
 @login_required
 def clients():
     clients = Client.get_all()
-    return render_template('clients.html', clients=clients)
+    return render_template('clients.html', clients=clients, title='Klienci')
 
 
 @bp_client.route('/<idx>', methods=['GET'])
 @login_required
 def client(idx):
     client = Client.get_by_id(idx)
-    return render_template('client.html', client=client)
+    return render_template('client.html', client=client, title='Szczegóły klienta')
 
 
 @bp_client.route('/add', methods=['GET', 'POST'])
@@ -41,7 +41,7 @@ def add():
         db.session.commit()
 
         return redirect(url_for('client.clients'))
-    return render_template('add_client.html', form=form)
+    return render_template('add_client.html', form=form, title='Dodawanie klienta')
 
 
 @bp_client.route("/edit/<int:idx>", methods=['GET', 'POST'])
@@ -56,7 +56,7 @@ def edit(idx):
         db.session.commit()
 
         return redirect(url_for('client.clients'))
-    return render_template('edit_client.html', form=form)
+    return render_template('edit_client.html', form=form, title='Edycja klienta')
 
 
 @bp_client.route("/delete/<int:idx>", methods=['GET'])

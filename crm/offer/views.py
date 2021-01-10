@@ -10,11 +10,17 @@ from .models import Offer
 bp_offer = Blueprint('offer', __name__, template_folder='templates')
 
 
-@bp_offer.route('', methods=['GET'])
+@bp_offer.route('/', methods=['GET'])
 @login_required
 def offers():
     offers = Offer.get_all_with_user_and_client()
-    return render_template('offers.html', offers=offers)
+    return render_template('offers.html', offers=offers, title='Oferty')
+
+@bp_offer.route('', methods=['GET'])
+@login_required
+def offer(idx):
+    offer = Offer.get_by_id(idx)
+    return render_template('offer.html', offers=offers, title='Szczegóły oferty')
 
 
 @bp_offer.route('/add', methods=['GET', 'POST'])
@@ -38,7 +44,7 @@ def add():
         FolderHandler.create_offer_folder(offer)
 
         return redirect(url_for('offer.offers'))
-    return render_template('add_offer.html', form=form)
+    return render_template('add_offer.html', form=form, title='Dodawanie oferty')
 
 
 @bp_offer.route("/delete/<int:idx>", methods=['GET'])
